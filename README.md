@@ -93,7 +93,6 @@ Frontend runs on `http://localhost:3000`, backend on `http://localhost:8000`.
 ### Docker Compose
 
 ```bash
-cd .
 docker compose up --build
 ```
 
