@@ -85,6 +85,7 @@ uvicorn main:app --reload --port 8000
 ```bash
 cd frontend
 npm install
+export NEXT_PUBLIC_API_URL=http://localhost:8000
 npm run dev
 ```
 

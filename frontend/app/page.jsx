@@ -16,6 +16,7 @@ const SOFTWARE_OPTIONS = [
   'curl',
   'git',
 ];
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
 
 export default function Dashboard() {
   const [baseOs, setBaseOs] = useState('debian');
@@ -51,7 +52,7 @@ export default function Dashboard() {
     if (wallpaper) formData.append('wallpaper', wallpaper);
 
     try {
-      const response = await fetch('http://localhost:8000/api/build', {
+      const response = await fetch(`${API_URL}/api/build`, {
         method: 'POST',
         body: formData,
       });

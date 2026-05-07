@@ -41,12 +41,14 @@ async def build_os(
     wallpaper_path = None
 
     if boot_logo is not None:
-        boot_logo_path = assets_dir / boot_logo.filename
+        boot_logo_ext = Path(boot_logo.filename or "").suffix
+        boot_logo_path = assets_dir / f"boot_logo{boot_logo_ext}"
         with boot_logo_path.open('wb') as destination:
             shutil.copyfileobj(boot_logo.file, destination)
 
     if wallpaper is not None:
-        wallpaper_path = assets_dir / wallpaper.filename
+        wallpaper_ext = Path(wallpaper.filename or "").suffix
+        wallpaper_path = assets_dir / f"wallpaper{wallpaper_ext}"
         with wallpaper_path.open('wb') as destination:
             shutil.copyfileobj(wallpaper.file, destination)
 
