@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE_OS="{{BASE_OS}}"
+PACKAGE_MANAGER="{{PACKAGE_MANAGER}}"
+PACKAGES="{{PACKAGES}}"
+BOOT_LOGO="{{BOOT_LOGO}}"
+WALLPAPER="{{WALLPAPER}}"
+BUILD_DIR="{{BUILD_DIR}}"
+OUTPUT_DIR="{{OUTPUT_DIR}}"
+
+mkdir -p "$BUILD_DIR" "$OUTPUT_DIR"
+
+echo "[1/6] Preparing build environment for $BASE_OS"
+if [[ "$BASE_OS" == "debian" || "$BASE_OS" == "ubuntu" ]]; then
+  apt-get update
+  apt-get install -y live-build debootstrap squashfs-tools xorriso
+else
+  pacman -Sy --noconfirm archiso
+fi
+
+echo "[2/6] Bootstrapping filesystem"
+# Example only: initialize a live-build/archiso working directory.
+
+if [[ "$BASE_OS" == "debian" || "$BASE_OS" == "ubuntu" ]]; then
+  lb config --distribution "$BASE_OS" --archive-areas "main contrib non-free"
+fi
+
+echo "[3/6] Installing selected software: $PACKAGES"
+# Example chroot install command:
+# chroot "$BUILD_DIR/chroot" $PACKAGE_MANAGER install -y $PACKAGES
+
+echo "[4/6] Applying custom branding assets"
+if [[ -n "$BOOT_LOGO" && -f "$BOOT_LOGO" ]]; then
+  cp "$BOOT_LOGO" "$BUILD_DIR/custom/boot-logo.png"
+fi
+if [[ -n "$WALLPAPER" && -f "$WALLPAPER" ]]; then
+  cp "$WALLPAPER" "$BUILD_DIR/custom/wallpaper.png"
+fi
+
+echo "[5/6] Building ISO"
+# Debian example: lb build
+# Arch example: mkarchiso -v -w "$BUILD_DIR/work" -o "$OUTPUT_DIR" "$BUILD_DIR/profile"
+
+echo "[6/6] Writing output artifact"
+ISO_NAME="distroforge-${BASE_OS}-$(date +%s).iso"
+touch "$OUTPUT_DIR/$ISO_NAME"
+echo "ISO created at $OUTPUT_DIR/$ISO_NAME"
