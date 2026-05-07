@@ -73,7 +73,7 @@ This is intentionally an MVP template and can be expanded into full distro-speci
 ### Backend
 
 ```bash
-cd /home/runner/work/bug-free-distro/bug-free-distro/backend
+cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -83,7 +83,7 @@ uvicorn main:app --reload --port 8000
 ### Frontend
 
 ```bash
-cd /home/runner/work/bug-free-distro/bug-free-distro/frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -93,13 +93,13 @@ Frontend runs on `http://localhost:3000`, backend on `http://localhost:8000`.
 ### Docker Compose
 
 ```bash
-cd /home/runner/work/bug-free-distro/bug-free-distro
+cd .
 docker compose up --build
 ```
 
 ## Tests
 
 ```bash
-cd /home/runner/work/bug-free-distro/bug-free-distro/backend
+cd backend
 pytest -q
 ```

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -22,8 +21,8 @@ def render_build_script(
     config: BuildConfig,
     build_root: Path,
     template_path: Path,
-    boot_logo_path: Optional[Path] = None,
-    wallpaper_path: Optional[Path] = None,
+    boot_logo_path: Path | None = None,
+    wallpaper_path: Path | None = None,
 ) -> Path:
     validate_package_manager(config)
 
